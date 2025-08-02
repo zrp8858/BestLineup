@@ -1,6 +1,14 @@
 from Player import Player
 
 
+def checkNumber(number):
+    try:
+        float(number)
+        return True
+    except ValueError:
+        return False
+
+
 class Controller:
     def __init__(self, model, view):
         self.model = model
@@ -10,13 +18,21 @@ class Controller:
         self.view.setButtonCommand(self.updateModel)
 
     def updateModel(self):
+        # Clearing error label on button press
+        self.view.setErrorLabel(0)
+
         # Getting input information
         newName = self.view.getNameEntry()
         newPosition = self.view.getPositionEntry()
         newPoints = self.view.getPointsEntry()
 
+        # Checking if points isn't a number
+        if not checkNumber(newPoints):
+            self.view.setErrorLabel(1)
+            return
+
         # Creating a new player object
-        newPlayer = Player(newName, newPosition, newPoints)
+        newPlayer = Player(newName, newPosition, float(newPoints))
 
         # Adding the player to the model
         self.model.addPlayerData(newPlayer)

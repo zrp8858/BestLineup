@@ -27,6 +27,9 @@ class View(tk.Tk):
         self.button = tk.Button(self, text="Add Player")
         self.button.pack(pady=10)
 
+        self.errorLabel = tk.Label(self, text="")
+        self.errorLabel.pack(pady=10)
+
     def setNameLabel(self, text):
         self.nameLabel.config(text=text)
 
@@ -47,3 +50,12 @@ class View(tk.Tk):
 
     def setButtonCommand(self, command):
         self.button.config(command=command)
+
+    def setErrorLabel(self, errorCode):
+        match errorCode:
+            # Error code 0 - No error, clear label
+            case 0:
+                self.errorLabel.config(text="")
+            # Error code 1 - Invalid input for points
+            case 1:
+                self.errorLabel.config(text="Invalid input for points!")
