@@ -1,0 +1,33 @@
+# PyCharm settings
+.idea/
+
+# Virtual environment
+.venv/
+
+# Byte-compiled / cached files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Logs and databases
+*.log
+*.sqlite
+
+# Coverage reports
+htmlcov/
+.coverage
+
+# Jupyter notebooks
+.ipynb_checkpoints
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# dotenv environment variables
+.env
