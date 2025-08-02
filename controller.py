@@ -1,3 +1,6 @@
+from Player import Player
+
+
 class Controller:
     def __init__(self, model, view):
         self.model = model
@@ -12,10 +15,10 @@ class Controller:
         newPosition = self.view.getPositionEntry()
         newPoints = self.view.getPointsEntry()
 
-        newPlayer = (newName, newPosition, newPoints)
+        newPlayer = Player(newName, newPosition, newPoints)
 
         self.model.addPlayerData(newPlayer)
 
-        self.view.setNameLabel(self.model.getPlayers()[0][0])
-        self.view.setPositionLabel(self.model.getPlayers()[0][1])
-        self.view.setPointsLabel(self.model.getPlayers()[0][2])
+        self.view.setNameLabel(self.model.getPlayers()[0].getName())
+        self.view.setPositionLabel(self.model.getPlayers()[0].getPosition())
+        self.view.setPointsLabel(self.model.getPlayers()[0].getPoints())
