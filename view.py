@@ -32,6 +32,19 @@ class View(tk.Tk):
         self.errorLabel = tk.Label(self, text="", anchor="center", justify="center")
         self.errorLabel.grid(row=2, column=0, columnspan=4, padx=10, pady=5)
 
+        # Best Fantasy Lineup
+        self.lineupFrame = tk.Frame(self)
+        self.lineupFrame.grid(row=3, column=0, columnspan=4)
+
+        self.qbLabel = tk.Label(self.lineupFrame, text="QB")
+        self.qbLabel.grid(row=0, column=0, padx=40, pady=(25, 10))
+
+        self.qbName = tk.Label(self.lineupFrame, text="N/A")
+        self.qbName.grid(row=0, column=1, padx=40, pady=(25, 10))
+
+        self.qbPts = tk.Label(self.lineupFrame, text="0.0")
+        self.qbPts.grid(row=0, column=2, padx=40, pady=(25, 10))
+
     def setNameLabel(self, text):
         self.nameLabel.config(text=text)
 
