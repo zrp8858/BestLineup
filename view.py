@@ -6,29 +6,31 @@ class View(tk.Tk):
         super().__init__()
         self.title("Best Lineup Calculator")
 
-        self.nameLabel = tk.Label(self, text="")
-        self.nameLabel.pack(pady=10)
+        # Headers for adding a player
+        self.nameLabel = tk.Label(self, text="Name")
+        self.nameLabel.grid(row=0, column=0, padx=10)
 
-        self.positionLabel = tk.Label(self, text="")
-        self.positionLabel.pack(pady=10)
+        self.positionLabel = tk.Label(self, text="Position")
+        self.positionLabel.grid(row=0, column=1, padx=10)
 
-        self.pointsLabel = tk.Label(self, text="")
-        self.pointsLabel.pack(pady=10)
+        self.pointsLabel = tk.Label(self, text="Points")
+        self.pointsLabel.grid(row=0, column=2, padx=10)
 
+        # Fields for adding a player
         self.nameEntry = tk.Entry(self)
-        self.nameEntry.pack(pady=10)
+        self.nameEntry.grid(row=1, column=0, padx=10, pady=10)
 
         self.positionEntry = tk.Entry(self)
-        self.positionEntry.pack(pady=10)
+        self.positionEntry.grid(row=1, column=1, padx=10, pady=10)
 
         self.pointsEntry = tk.Entry(self)
-        self.pointsEntry.pack(pady=10)
+        self.pointsEntry.grid(row=1, column=2, padx=10, pady=10)
 
         self.button = tk.Button(self, text="Add Player")
-        self.button.pack(pady=10)
+        self.button.grid(row=1, column=3, padx=10, pady=10)
 
-        self.errorLabel = tk.Label(self, text="")
-        self.errorLabel.pack(pady=10)
+        self.errorLabel = tk.Label(self, text="", anchor="center", justify="center")
+        self.errorLabel.grid(row=2, column=0, columnspan=4, padx=10, pady=5)
 
     def setNameLabel(self, text):
         self.nameLabel.config(text=text)
