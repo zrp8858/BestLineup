@@ -1,7 +1,10 @@
+import Player
+
+
 class Model:
     def __init__(self):
         self.messageData = "Enter a player!"
-        self.players = []
+        self.players = list()
 
     def getMessageData(self):
         return self.messageData
