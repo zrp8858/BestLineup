@@ -1,9 +1,16 @@
 class Model:
     def __init__(self):
-        self.data = "Hello MVC"
+        self.messageData = "Enter a player!"
+        self.players = []
 
-    def get_data(self):
-        return self.data
+    def getMessageData(self):
+        return self.messageData
 
-    def set_data(self, new_data):
-        self.data = new_data
+    def setMessageData(self, newData):
+        self.messageData = newData
+
+    def getPlayers(self):
+        return self.players
+
+    def addPlayerData(self, player):
+        self.players.append(player)

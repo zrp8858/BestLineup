@@ -4,22 +4,46 @@ import tkinter as tk
 class View(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("MVC Example")
+        self.title("Best Lineup Calculator")
 
-        self.label = tk.Label(self, text="")
-        self.label.pack(pady=10)
+        self.nameLabel = tk.Label(self, text="")
+        self.nameLabel.pack(pady=10)
 
-        self.entry = tk.Entry(self)
-        self.entry.pack(pady=10)
+        self.positionLabel = tk.Label(self, text="")
+        self.positionLabel.pack(pady=10)
 
-        self.button = tk.Button(self, text="Update")
+        self.pointsLabel = tk.Label(self, text="")
+        self.pointsLabel.pack(pady=10)
+
+        self.nameEntry = tk.Entry(self)
+        self.nameEntry.pack(pady=10)
+
+        self.positionEntry = tk.Entry(self)
+        self.positionEntry.pack(pady=10)
+
+        self.pointsEntry = tk.Entry(self)
+        self.pointsEntry.pack(pady=10)
+
+        self.button = tk.Button(self, text="Add Player")
         self.button.pack(pady=10)
 
-    def set_label_text(self, text):
-        self.label.config(text=text)
+    def setNameLabel(self, text):
+        self.nameLabel.config(text=text)
 
-    def get_entry_text(self):
-        return self.entry.get()
+    def setPositionLabel(self, text):
+        self.positionLabel.config(text=text)
 
-    def set_button_command(self, command):
+    def setPointsLabel(self, text):
+        self.pointsLabel.config(text=text)
+
+    def getNameEntry(self):
+        return self.nameEntry.get()
+
+    def getPositionEntry(self):
+        return self.positionEntry.get()
+
+    def getPointsEntry(self):
+        return self.pointsEntry.get()
+
+    def setButtonCommand(self, command):
         self.button.config(command=command)

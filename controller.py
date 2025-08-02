@@ -4,11 +4,18 @@ class Controller:
         self.view = view
 
         # Initialize View with model data
-        self.view.set_label_text(self.model.get_data())
         # Bind button to handler
-        self.view.set_button_command(self.update_model)
+        self.view.setButtonCommand(self.updateModel)
 
-    def update_model(self):
-        new_data = self.view.get_entry_text()
-        self.model.set_data(new_data)
-        self.view.set_label_text(self.model.get_data())
+    def updateModel(self):
+        newName = self.view.getNameEntry()
+        newPosition = self.view.getPositionEntry()
+        newPoints = self.view.getPointsEntry()
+
+        newPlayer = (newName, newPosition, newPoints)
+
+        self.model.addPlayerData(newPlayer)
+
+        self.view.setNameLabel(self.model.getPlayers()[0][0])
+        self.view.setPositionLabel(self.model.getPlayers()[0][1])
+        self.view.setPointsLabel(self.model.getPlayers()[0][2])
