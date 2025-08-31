@@ -280,6 +280,8 @@ class View(tk.Tk):
     def setBe7Pts(self, text):
         self.be7Pts.config(text=text)
 
+    # Get display values
+    # Entered Player
     def getNameEntry(self):
         return self.nameEntry.get()
 
@@ -288,6 +290,36 @@ class View(tk.Tk):
 
     def getPointsEntry(self):
         return self.pointsEntry.get()
+    # QB
+    def getQb(self):
+        return self.qbName.get() != "Empty"
+    # RB1
+    def getRb1(self):
+        return self.rb1Name.get() != "Empty"
+    # RB2
+    def getRb2(self):
+        return self.rb2Name.get() != "Empty"
+    # WR1
+    def getWr1(self):
+        return self.wr1Name.get() != "Empty"
+    # WR2
+    def getWr2(self):
+        return self.wr2Name.get() != "Empty"
+    # TE
+    def getTe(self):
+        return self.teName.get() != "Empty"
+    # FLEX
+    def getFlex(self):
+        return self.flexName.get() != "Empty"
+    # D/ST
+    def getDst(self):
+        return self.dstName.get() != "Empty"
+    # K
+    def getK(self):
+        return self.kName.get() != "Empty"
+    # BE Full
+    def getBeFull(self):
+        return self.dstName.get() != "Empty"
 
     def setButtonCommand(self, command):
         self.button.config(command=command)
