@@ -181,14 +181,104 @@ class View(tk.Tk):
         self.be7Pts = tk.Label(self.lineupFrame, text="0.0")
         self.be7Pts.grid(row=15, column=2, padx=40, pady=(5,25))
 
-    def setNameLabel(self, text):
-        self.nameLabel.config(text=text)
+    # Set display values for added players
+    # QB
+    def setQbName(self, text):
+        self.qbName.config(text=text)
 
-    def setPositionLabel(self, text):
-        self.positionLabel.config(text=text)
+    def setQbPts(self, text):
+        self.qbPts.config(text=text)
+    # RB1
+    def setRb1Name(self, text):
+        self.rb1Name.config(text=text)
 
-    def setPointsLabel(self, text):
-        self.pointsLabel.config(text=text)
+    def setRb1Pts(self, text):
+        self.rb1Pts.config(text=text)
+    # RB2
+    def setRb2Name(self, text):
+        self.rb2Name.config(text=text)
+
+    def setRb2Pts(self, text):
+        self.rb2Pts.config(text=text)
+    # WR1
+    def setWr1Name(self, text):
+        self.wr1Name.config(text=text)
+
+    def setWr1Pts(self, text):
+        self.wr1Pts.config(text=text)
+    # WR2
+    def setWr2Name(self, text):
+        self.wr2Name.config(text=text)
+
+    def setWr2Pts(self, text):
+        self.wr2Pts.config(text=text)
+    # TE
+    def setTeName(self, text):
+        self.teName.config(text=text)
+
+    def setTePts(self, text):
+        self.tePts.config(text=text)
+    # FLEX
+    def setFlexName(self, text):
+        self.flexName.config(text=text)
+
+    def setFlexPts(self, text):
+        self.flexPts.config(text=text)
+    # D/ST
+    def setDstName(self, text):
+        self.dstName.config(text=text)
+
+    def setDstPts(self, text):
+        self.dstPts.config(text=text)
+    # K
+    def setKName(self, text):
+        self.kName.config(text=text)
+
+    def setKPts(self, text):
+        self.kPts.config(text=text)
+
+    # BE1
+    def setBe1Name(self, text):
+        self.be1Name.config(text=text)
+
+    def setBe1Pts(self, text):
+        self.be1Pts.config(text=text)
+    # BE2
+    def setBe2Name(self, text):
+        self.be2Name.config(text=text)
+
+    def setBe2Pts(self, text):
+        self.be2Pts.config(text=text)
+    # BE3
+    def setBe3Name(self, text):
+        self.be3Name.config(text=text)
+
+    def setBe3Pts(self, text):
+        self.be3Pts.config(text=text)
+    # BE4
+    def setBe4Name(self, text):
+        self.be4Name.config(text=text)
+
+    def setBe4Pts(self, text):
+        self.be4Pts.config(text=text)
+    # BE5
+    def setBe5Name(self, text):
+        self.be5Name.config(text=text)
+
+    def setBe5Pts(self, text):
+        self.be5Pts.config(text=text)
+    # BE6
+    def setBe6Name(self, text):
+        self.be6Name.config(text=text)
+
+    def setBe6Pts(self, text):
+        self.be6Pts.config(text=text)
+    # BE7
+    def setBe7Name(self, text):
+        self.be7Name.config(text=text)
+
+    def setBe7Pts(self, text):
+        self.be7Pts.config(text=text)
 
     def getNameEntry(self):
         return self.nameEntry.get()
@@ -210,3 +300,4 @@ class View(tk.Tk):
             # Error code 1 - Invalid input for points
             case 1:
                 self.errorLabel.config(text="Invalid input for points!")
+            # Error code 2 - Invalid position type
