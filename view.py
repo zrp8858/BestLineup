@@ -117,6 +117,70 @@ class View(tk.Tk):
         self.kPts = tk.Label(self.lineupFrame, text="0.0")
         self.kPts.grid(row=8, column=2, padx=40, pady=5)
 
+        # BE1 Row
+        self.be1Label = tk.Label(self.lineupFrame, text="BE")
+        self.be1Label.grid(row=9, column=0, padx=40, pady=(20,5))
+
+        self.be1Name = tk.Label(self.lineupFrame, text="Empty")
+        self.be1Name.grid(row=9, column=1, padx=40, pady=(20,5))
+
+        self.be1Pts = tk.Label(self.lineupFrame, text="0.0")
+        self.be1Pts.grid(row=9, column=2, padx=40, pady=(20,5))
+        # BE2 Row
+        self.be2Label = tk.Label(self.lineupFrame, text="BE")
+        self.be2Label.grid(row=10, column=0, padx=40, pady=5)
+
+        self.be2Name = tk.Label(self.lineupFrame, text="Empty")
+        self.be2Name.grid(row=10, column=1, padx=40, pady=5)
+
+        self.be2Pts = tk.Label(self.lineupFrame, text="0.0")
+        self.be2Pts.grid(row=10, column=2, padx=40, pady=5)
+        # BE3 Row
+        self.be3Label = tk.Label(self.lineupFrame, text="BE")
+        self.be3Label.grid(row=11, column=0, padx=40, pady=5)
+
+        self.be3Name = tk.Label(self.lineupFrame, text="Empty")
+        self.be3Name.grid(row=11, column=1, padx=40, pady=5)
+
+        self.be3Pts = tk.Label(self.lineupFrame, text="0.0")
+        self.be3Pts.grid(row=11, column=2, padx=40, pady=5)
+        # BE4 Row
+        self.be4Label = tk.Label(self.lineupFrame, text="BE")
+        self.be4Label.grid(row=12, column=0, padx=40, pady=5)
+
+        self.be4Name = tk.Label(self.lineupFrame, text="Empty")
+        self.be4Name.grid(row=12, column=1, padx=40, pady=5)
+
+        self.be4Pts = tk.Label(self.lineupFrame, text="0.0")
+        self.be4Pts.grid(row=12, column=2, padx=40, pady=5)
+        # BE5 Row
+        self.be5Label = tk.Label(self.lineupFrame, text="BE")
+        self.be5Label.grid(row=13, column=0, padx=40, pady=5)
+
+        self.be5Name = tk.Label(self.lineupFrame, text="Empty")
+        self.be5Name.grid(row=13, column=1, padx=40, pady=5)
+
+        self.be5Pts = tk.Label(self.lineupFrame, text="0.0")
+        self.be5Pts.grid(row=13, column=2, padx=40, pady=5)
+        # BE6 Row
+        self.be6Label = tk.Label(self.lineupFrame, text="BE")
+        self.be6Label.grid(row=14, column=0, padx=40, pady=5)
+
+        self.be6Name = tk.Label(self.lineupFrame, text="Empty")
+        self.be6Name.grid(row=14, column=1, padx=40, pady=5)
+
+        self.be6Pts = tk.Label(self.lineupFrame, text="0.0")
+        self.be6Pts.grid(row=14, column=2, padx=40, pady=5)
+        # BE7 Row
+        self.be7Label = tk.Label(self.lineupFrame, text="BE")
+        self.be7Label.grid(row=15, column=0, padx=40, pady=(5,25))
+
+        self.be7Name = tk.Label(self.lineupFrame, text="Empty")
+        self.be7Name.grid(row=15, column=1, padx=40, pady=(5,25))
+
+        self.be7Pts = tk.Label(self.lineupFrame, text="0.0")
+        self.be7Pts.grid(row=15, column=2, padx=40, pady=(5,25))
+
     def setNameLabel(self, text):
         self.nameLabel.config(text=text)
 
