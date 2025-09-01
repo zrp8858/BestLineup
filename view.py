@@ -6,207 +6,208 @@ class View(tk.Tk):
         super().__init__()
         self.title("Best Lineup Calculator")
 
-        # Headers for adding a player
-        self.nameLabel = tk.Label(self, text="Name")
-        self.nameLabel.grid(row=0, column=0, padx=10)
+        # Entry fields
+        tk.Label(self, text="Name").grid(row=0, column=0, padx=10)
+        tk.Label(self, text="Position").grid(row=0, column=1, padx=10)
+        tk.Label(self, text="Points").grid(row=0, column=2, padx=10)
 
-        self.positionLabel = tk.Label(self, text="Position")
-        self.positionLabel.grid(row=0, column=1, padx=10)
-
-        self.pointsLabel = tk.Label(self, text="Points")
-        self.pointsLabel.grid(row=0, column=2, padx=10)
-
-        # Fields for adding a player
         self.nameEntry = tk.Entry(self)
         self.nameEntry.grid(row=1, column=0, padx=10, pady=10)
-
         self.positionEntry = tk.Entry(self)
         self.positionEntry.grid(row=1, column=1, padx=10, pady=10)
-
         self.pointsEntry = tk.Entry(self)
         self.pointsEntry.grid(row=1, column=2, padx=10, pady=10)
 
         self.button = tk.Button(self, text="Add Player")
         self.button.grid(row=1, column=3, padx=10, pady=10)
 
-        self.errorLabel = tk.Label(self, text="", anchor="center", justify="center")
+        self.errMsgVar = tk.StringVar(value="Enter player info above")
+        self.errorLabel = tk.Label(self, textvariable=self.errMsgVar, anchor="center", justify="center")
         self.errorLabel.grid(row=2, column=0, columnspan=4, padx=10, pady=5)
 
-        # Best Fantasy Lineup
+        # Best lineup frame initialization
         self.lineupFrame = tk.Frame(self)
         self.lineupFrame.grid(row=3, column=0, columnspan=4)
-        # QB Row
-        self.qbLabel = tk.Label(self.lineupFrame, text="QB")
-        self.qbLabel.grid(row=0, column=0, padx=40, pady=5)
+        self.displayEmptyLineup()
 
-        self.qbName = tk.Label(self.lineupFrame, text="Empty")
-        self.qbName.grid(row=0, column=1, padx=40, pady=5)
+        # Create lineup rows
+        self.addDisplayRow(self.lineupFrame, 0, "QB", self.qbNameVar, self.qbPtsVar)
+        self.addDisplayRow(self.lineupFrame, 1, "RB", self.rb1NameVar, self.rb1PtsVar)
+        self.addDisplayRow(self.lineupFrame, 2, "RB", self.rb2NameVar, self.rb2PtsVar)
+        self.addDisplayRow(self.lineupFrame, 3, "WR", self.wr1NameVar, self.wr1PtsVar)
+        self.addDisplayRow(self.lineupFrame, 4, "WR", self.wr2NameVar, self.wr2PtsVar)
+        self.addDisplayRow(self.lineupFrame, 5, "TE", self.teNameVar, self.tePtsVar)
+        self.addDisplayRow(
+            self.lineupFrame, 6, "FLEX", self.flexNameVar, self.flexPtsVar
+        )
+        self.addDisplayRow(self.lineupFrame, 7, "D/ST", self.dstNameVar, self.dstPtsVar)
+        self.addDisplayRow(self.lineupFrame, 8, "K", self.kNameVar, self.kPtsVar, beSpace=(5, 20))
+        # Bench
+        for i in range(1, 8):
+            nameVar = getattr(self, f"be{i}NameVar")
+            ptsVar = getattr(self, f"be{i}PtsVar")
+            self.addDisplayRow(self.lineupFrame, 8 + i, "BE", nameVar, ptsVar)
 
-        self.qbPts = tk.Label(self.lineupFrame, text="0.0")
-        self.qbPts.grid(row=0, column=2, padx=40, pady=5)
-        # RB1 Row
-        self.rb1Label = tk.Label(self.lineupFrame, text="RB")
-        self.rb1Label.grid(row=1, column=0, padx=40, pady=5)
+    def displayEmptyLineup(self):
+        # Main lineup
+        self.qbNameVar = tk.StringVar(value="Empty")
+        self.qbPtsVar = tk.StringVar(value="0.0")
 
-        self.rb1Name = tk.Label(self.lineupFrame, text="Empty")
-        self.rb1Name.grid(row=1, column=1, padx=40, pady=5)
+        self.rb1NameVar = tk.StringVar(value="Empty")
+        self.rb1PtsVar = tk.StringVar(value="0.0")
 
-        self.rb1Pts = tk.Label(self.lineupFrame, text="0.0")
-        self.rb1Pts.grid(row=1, column=2, padx=40, pady=5)
-        # RB2 Row
-        self.rb2Label = tk.Label(self.lineupFrame, text="RB")
-        self.rb2Label.grid(row=2, column=0, padx=40, pady=5)
+        self.rb2NameVar = tk.StringVar(value="Empty")
+        self.rb2PtsVar = tk.StringVar(value="0.0")
 
-        self.rb2Name = tk.Label(self.lineupFrame, text="Empty")
-        self.rb2Name.grid(row=2, column=1, padx=40, pady=5)
+        self.wr1NameVar = tk.StringVar(value="Empty")
+        self.wr1PtsVar = tk.StringVar(value="0.0")
 
-        self.rb2Pts = tk.Label(self.lineupFrame, text="0.0")
-        self.rb2Pts.grid(row=2, column=2, padx=40, pady=5)
-        # WR1 Row
-        self.wr1Label = tk.Label(self.lineupFrame, text="WR")
-        self.wr1Label.grid(row=3, column=0, padx=40, pady=5)
+        self.wr2NameVar = tk.StringVar(value="Empty")
+        self.wr2PtsVar = tk.StringVar(value="0.0")
 
-        self.wr1Name = tk.Label(self.lineupFrame, text="Empty")
-        self.wr1Name.grid(row=3, column=1, padx=40, pady=5)
+        self.teNameVar = tk.StringVar(value="Empty")
+        self.tePtsVar = tk.StringVar(value="0.0")
 
-        self.wr1Pts = tk.Label(self.lineupFrame, text="0.0")
-        self.wr1Pts.grid(row=3, column=2, padx=40, pady=5)
-        # WR2 Row
-        self.wr2Label = tk.Label(self.lineupFrame, text="WR")
-        self.wr2Label.grid(row=4, column=0, padx=40, pady=5)
+        self.flexNameVar = tk.StringVar(value="Empty")
+        self.flexPtsVar = tk.StringVar(value="0.0")
 
-        self.wr2Name = tk.Label(self.lineupFrame, text="Empty")
-        self.wr2Name.grid(row=4, column=1, padx=40, pady=5)
+        self.dstNameVar = tk.StringVar(value="Empty")
+        self.dstPtsVar = tk.StringVar(value="0.0")
 
-        self.wr2Pts = tk.Label(self.lineupFrame, text="0.0")
-        self.wr2Pts.grid(row=4, column=2, padx=40, pady=5)
-        # TE Row
-        self.teLabel = tk.Label(self.lineupFrame, text="TE")
-        self.teLabel.grid(row=5, column=0, padx=40, pady=5)
+        self.kNameVar = tk.StringVar(value="Empty")
+        self.kPtsVar = tk.StringVar(value="0.0")
 
-        self.teName = tk.Label(self.lineupFrame, text="Empty")
-        self.teName.grid(row=5, column=1, padx=40, pady=5)
+        self.benchNameVars = [None] + [tk.StringVar(value="Empty") for _ in range(1, 8)]
+        self.benchPtsVars = [None] + [tk.StringVar(value="0.0") for _ in range(1, 8)]
 
-        self.tePts = tk.Label(self.lineupFrame, text="0.0")
-        self.tePts.grid(row=5, column=2, padx=40, pady=5)
-        # FLEX Row
-        self.flexLabel = tk.Label(self.lineupFrame, text="FLEX")
-        self.flexLabel.grid(row=6, column=0, padx=40, pady=5)
+        # Bench
+        for i in range(1, 8):
+            setattr(self, f"be{i}NameVar", tk.StringVar(value="Empty"))
+            setattr(self, f"be{i}PtsVar", tk.StringVar(value="0.0"))
 
-        self.flexName = tk.Label(self.lineupFrame, text="Empty")
-        self.flexName.grid(row=6, column=1, padx=40, pady=5)
+    def addDisplayRow(self, parent, row, label, nameVar, ptsVar, beSpace=(5,5)):
+        tk.Label(parent, text=label).grid(row=row, column=0, padx=40, pady=beSpace)
+        tk.Label(parent, textvariable=nameVar).grid(row=row, column=1, padx=40, pady=beSpace)
+        tk.Label(parent, textvariable=ptsVar).grid(row=row, column=2, padx=40, pady=beSpace)
 
-        self.flexPts = tk.Label(self.lineupFrame, text="0.0")
-        self.flexPts.grid(row=6, column=2, padx=40, pady=5)
-        # D/ST Row
-        self.dstLabel = tk.Label(self.lineupFrame, text="D/ST")
-        self.dstLabel.grid(row=7, column=0, padx=40, pady=5)
-
-        self.dstName = tk.Label(self.lineupFrame, text="Empty")
-        self.dstName.grid(row=7, column=1, padx=40, pady=5)
-
-        self.dstPts = tk.Label(self.lineupFrame, text="0.0")
-        self.dstPts.grid(row=7, column=2, padx=40, pady=5)
-        # K Row
-        self.kLabel = tk.Label(self.lineupFrame, text="K")
-        self.kLabel.grid(row=8, column=0, padx=40, pady=5)
-
-        self.kName = tk.Label(self.lineupFrame, text="Empty")
-        self.kName.grid(row=8, column=1, padx=40, pady=5)
-
-        self.kPts = tk.Label(self.lineupFrame, text="0.0")
-        self.kPts.grid(row=8, column=2, padx=40, pady=5)
-
-        # BE1 Row
-        self.be1Label = tk.Label(self.lineupFrame, text="BE")
-        self.be1Label.grid(row=9, column=0, padx=40, pady=(20,5))
-
-        self.be1Name = tk.Label(self.lineupFrame, text="Empty")
-        self.be1Name.grid(row=9, column=1, padx=40, pady=(20,5))
-
-        self.be1Pts = tk.Label(self.lineupFrame, text="0.0")
-        self.be1Pts.grid(row=9, column=2, padx=40, pady=(20,5))
-        # BE2 Row
-        self.be2Label = tk.Label(self.lineupFrame, text="BE")
-        self.be2Label.grid(row=10, column=0, padx=40, pady=5)
-
-        self.be2Name = tk.Label(self.lineupFrame, text="Empty")
-        self.be2Name.grid(row=10, column=1, padx=40, pady=5)
-
-        self.be2Pts = tk.Label(self.lineupFrame, text="0.0")
-        self.be2Pts.grid(row=10, column=2, padx=40, pady=5)
-        # BE3 Row
-        self.be3Label = tk.Label(self.lineupFrame, text="BE")
-        self.be3Label.grid(row=11, column=0, padx=40, pady=5)
-
-        self.be3Name = tk.Label(self.lineupFrame, text="Empty")
-        self.be3Name.grid(row=11, column=1, padx=40, pady=5)
-
-        self.be3Pts = tk.Label(self.lineupFrame, text="0.0")
-        self.be3Pts.grid(row=11, column=2, padx=40, pady=5)
-        # BE4 Row
-        self.be4Label = tk.Label(self.lineupFrame, text="BE")
-        self.be4Label.grid(row=12, column=0, padx=40, pady=5)
-
-        self.be4Name = tk.Label(self.lineupFrame, text="Empty")
-        self.be4Name.grid(row=12, column=1, padx=40, pady=5)
-
-        self.be4Pts = tk.Label(self.lineupFrame, text="0.0")
-        self.be4Pts.grid(row=12, column=2, padx=40, pady=5)
-        # BE5 Row
-        self.be5Label = tk.Label(self.lineupFrame, text="BE")
-        self.be5Label.grid(row=13, column=0, padx=40, pady=5)
-
-        self.be5Name = tk.Label(self.lineupFrame, text="Empty")
-        self.be5Name.grid(row=13, column=1, padx=40, pady=5)
-
-        self.be5Pts = tk.Label(self.lineupFrame, text="0.0")
-        self.be5Pts.grid(row=13, column=2, padx=40, pady=5)
-        # BE6 Row
-        self.be6Label = tk.Label(self.lineupFrame, text="BE")
-        self.be6Label.grid(row=14, column=0, padx=40, pady=5)
-
-        self.be6Name = tk.Label(self.lineupFrame, text="Empty")
-        self.be6Name.grid(row=14, column=1, padx=40, pady=5)
-
-        self.be6Pts = tk.Label(self.lineupFrame, text="0.0")
-        self.be6Pts.grid(row=14, column=2, padx=40, pady=5)
-        # BE7 Row
-        self.be7Label = tk.Label(self.lineupFrame, text="BE")
-        self.be7Label.grid(row=15, column=0, padx=40, pady=(5,25))
-
-        self.be7Name = tk.Label(self.lineupFrame, text="Empty")
-        self.be7Name.grid(row=15, column=1, padx=40, pady=(5,25))
-
-        self.be7Pts = tk.Label(self.lineupFrame, text="0.0")
-        self.be7Pts.grid(row=15, column=2, padx=40, pady=(5,25))
-
-    def setNameLabel(self, text):
-        self.nameLabel.config(text=text)
-
-    def setPositionLabel(self, text):
-        self.positionLabel.config(text=text)
-
-    def setPointsLabel(self, text):
-        self.pointsLabel.config(text=text)
-
+    # Entry getters
     def getNameEntry(self):
         return self.nameEntry.get()
 
-    def getPositionEntry(self):
+    def getPosEntry(self):
         return self.positionEntry.get()
 
-    def getPointsEntry(self):
+    def getPtsEntry(self):
         return self.pointsEntry.get()
 
+    # Slot getters
+    def getQb(self):
+        return self.qbNameVar.get() != "Empty"
+
+    def getRb1(self):
+        return self.rb1NameVar.get() != "Empty"
+
+    def getRb2(self):
+        return self.rb2NameVar.get() != "Empty"
+
+    def getWr1(self):
+        return self.wr1NameVar.get() != "Empty"
+
+    def getWr2(self):
+        return self.wr2NameVar.get() != "Empty"
+
+    def getTe(self):
+        return self.teNameVar.get() != "Empty"
+
+    def getFlex(self):
+        return self.flexNameVar.get() != "Empty"
+
+    def getDst(self):
+        return self.dstNameVar.get() != "Empty"
+
+    def getK(self):
+        return self.kNameVar.get() != "Empty"
+
+    def getBeFull(self):
+        return all(getattr(self, f"be{i}NameVar").get() != "Empty" for i in range(1, 8))
+
+    # Slot setters
+    def setQbName(self, text):
+        self.qbNameVar.set(text)
+
+    def setQbPts(self, text):
+        self.qbPtsVar.set(str(text))
+
+    def setRb1Name(self, text):
+        self.rb1NameVar.set(text)
+
+    def setRb1Pts(self, text):
+        self.rb1PtsVar.set(str(text))
+
+    def setRb2Name(self, text):
+        self.rb2NameVar.set(text)
+
+    def setRb2Pts(self, text):
+        self.rb2PtsVar.set(str(text))
+
+    def setWr1Name(self, text):
+        self.wr1NameVar.set(text)
+
+    def setWr1Pts(self, text):
+        self.wr1PtsVar.set(str(text))
+
+    def setWr2Name(self, text):
+        self.wr2NameVar.set(text)
+
+    def setWr2Pts(self, text):
+        self.wr2PtsVar.set(str(text))
+
+    def setTeName(self, text):
+        self.teNameVar.set(text)
+
+    def setTePts(self, text):
+        self.tePtsVar.set(str(text))
+
+    def setFlexName(self, text):
+        self.flexNameVar.set(text)
+
+    def setFlexPts(self, text):
+        self.flexPtsVar.set(str(text))
+
+    def setDstName(self, text):
+        self.dstNameVar.set(text)
+
+    def setDstPts(self, text):
+        self.dstPtsVar.set(str(text))
+
+    def setKName(self, text):
+        self.kNameVar.set(text)
+
+    def setKPts(self, text):
+        self.kPtsVar.set(str(text))
+
+    def setBeName(self, num, text):
+        self.benchNameVars[num].set(text)
+
+    def setBePts(self, num, text):
+        self.benchPtsVars[num].set(str(text))
+
+    def setErrorLabel(self, num) -> bool:
+        errMsg = ""
+        match num:
+            case 0:
+                self.errMsgVar.set("Updated Lineup Successfully!")
+                return True
+            case 1:
+                errMsg = f"Invalid input for points, please enter a decimal value!"
+            case 2:
+                errMsg = f"Invalid position, please enter QB, RB, WR, TE, D/ST or K!"
+            case 3:
+                errMsg = f"All available slots for this position are full!"
+        
+        self.errMsgVar.set(errMsg)
+        return False
+
+    # Button binding
     def setButtonCommand(self, command):
         self.button.config(command=command)
-
-    def setErrorLabel(self, errorCode):
-        match errorCode:
-            # Error code 0 - No error, clear label
-            case 0:
-                self.errorLabel.config(text="")
-            # Error code 1 - Invalid input for points
-            case 1:
-                self.errorLabel.config(text="Invalid input for points!")
