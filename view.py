@@ -41,7 +41,7 @@ class View(tk.Tk):
             self.lineupFrame, 6, "FLEX", self.flexNameVar, self.flexPtsVar
         )
         self.addDisplayRow(self.lineupFrame, 7, "D/ST", self.dstNameVar, self.dstPtsVar)
-        self.addDisplayRow(self.lineupFrame, 8, "K", self.kNameVar, self.kPtsVar)
+        self.addDisplayRow(self.lineupFrame, 8, "K", self.kNameVar, self.kPtsVar, beSpace=(5, 20))
         # Bench
         for i in range(1, 8):
             nameVar = getattr(self, f"be{i}NameVar")
@@ -85,10 +85,10 @@ class View(tk.Tk):
             setattr(self, f"be{i}NameVar", tk.StringVar(value="Empty"))
             setattr(self, f"be{i}PtsVar", tk.StringVar(value="0.0"))
 
-    def addDisplayRow(self, parent, row, label, nameVar, ptsVar):
-        tk.Label(parent, text=label).grid(row=row, column=0, padx=40, pady=5)
-        tk.Label(parent, textvariable=nameVar).grid(row=row, column=1, padx=40, pady=5)
-        tk.Label(parent, textvariable=ptsVar).grid(row=row, column=2, padx=40, pady=5)
+    def addDisplayRow(self, parent, row, label, nameVar, ptsVar, beSpace=(5,5)):
+        tk.Label(parent, text=label).grid(row=row, column=0, padx=40, pady=beSpace)
+        tk.Label(parent, textvariable=nameVar).grid(row=row, column=1, padx=40, pady=beSpace)
+        tk.Label(parent, textvariable=ptsVar).grid(row=row, column=2, padx=40, pady=beSpace)
 
     # Entry getters
     def getNameEntry(self):
