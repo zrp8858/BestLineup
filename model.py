@@ -1,30 +1,34 @@
+from typing import Dict, Tuple
 from Player import Player
 
 
 class Model:
-    def __init__(self):
+    def __init__(self) -> None:
         # Initialize all player slots with empty values
-        self.players = {
-            "qb": "",
-            "rb1": "",
-            "rb2": "",
-            "wr1": "",
-            "wr2": "",
-            "te": "",
-            "flex": "",
-            "dst": "",
-            "k": "",
-            "be1": "",
-            "be2": "",
-            "be3": "",
-            "be4": "",
-            "be5": "",
-            "be6": "",
-            "be7": "",
+        self.players: Dict[str, Tuple[str, float]] = {
+            "qb": ("", 0.0),
+            "rb1": ("", 0.0),
+            "rb2": ("", 0.0),
+            "wr1": ("", 0.0),
+            "wr2": ("", 0.0),
+            "te": ("", 0.0),
+            "flex": ("", 0.0),
+            "dst": ("", 0.0),
+            "k": ("", 0.0),
+            "be1": ("", 0.0),
+            "be2": ("", 0.0),
+            "be3": ("", 0.0),
+            "be4": ("", 0.0),
+            "be5": ("", 0.0),
+            "be6": ("", 0.0),
+            "be7": ("", 0.0),
         }
 
-    # UNUSED
-    def getTeam(self):
+    # Lineup Getters
+    def getStartingLineup(self) -> Dict[str, Tuple[str, float]]:
+        return {pos: player for pos, player in self.players.items() if not pos.startswith("be")}
+    
+    def getFullLineup(self) -> Dict[str, Tuple[str, float]]:
         return self.players
 
     # Generic add method to player map
@@ -83,3 +87,14 @@ class Model:
 
     def addBe7Data(self, be7: Player):
         self.addPlayerData("be7", be7)
+
+    # Functions to generate total starting lineup & bench inclusive points
+    def calcStartingLineup(self) -> float:
+        startingLineup: Dict[str, Tuple[str, float]] = self.getStartingLineup()
+        # Calculate total points for all values in list
+        return sum(pts for _, pts in startingLineup.values())
+    
+    def calcFullLineup(self) -> float:
+        fullLineup: Dict[str, Tuple[str, float]] = self.getFullLineup()
+        # Calculate total points for all values in list
+        return sum(pts for _, pts in fullLineup.values())
