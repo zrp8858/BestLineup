@@ -1,67 +1,84 @@
-import Player
+from Player import Player
 
 
 class Model:
     def __init__(self):
-        self.messageData = "Enter a player!"
-        self.players = dict()
-
-    def getMessageData(self):
-        return self.messageData
-
-    def setMessageData(self, newData):
-        self.messageData = newData
+        # Initialize all player slots with empty lists
+        self.players = {
+            "qb": [],
+            "rb1": [],
+            "rb2": [],
+            "wr1": [],
+            "wr2": [],
+            "te": [],
+            "flex": [],
+            "dst": [],
+            "k": [],
+            "be1": [],
+            "be2": [],
+            "be3": [],
+            "be4": [],
+            "be5": [],
+            "be6": [],
+            "be7": [],
+        }
 
     def getPlayers(self):
         return self.players
 
-    # Adding all player data to map
-    # QB Data
-    def addQbData(self, qb):
-        self.players['qb'].append(qb)
-    # RB1 Data
-    def addRb1Data(self, rb1):
-        self.players['rb1'].append(rb1)
-    # RB2 Data
-    def addRb2Data(self, rb2):
-        self.players['rb2'].append(rb2)
-    # WR1 Data
-    def addWr1Data(self, wr1):
-        self.players['wr1'].append(wr1)
-    # WR2 Data
-    def addWr2Data(self, wr2):
-        self.players['wr2'].append(wr2)
-    # TE Data
-    def addTeData(self, te):
-        self.players['te'].append(te)
-    # FLEX Data
-    def addFlexData(self, flex):
-        self.players['flex'].append(flex)
-    # D/ST Data
-    def addDstData(self, dst):
-        self.players['dst'].append(dst)
-    # K Data
-    def addKData(self, k):
-        self.players['k'].append(k)
+    # Generic add method to reduce code duplication
+    def _addPlayer(self, slot: str, player: Player):
+        if slot in self.players:
+            self.players[slot].append(player)
+        else:
+            raise ValueError(f"Invalid slot name: {slot}")
 
-    # BE1 Data
-    def addBe1Data(self, be1):
-        self.players['be1'].append(be1)
-    # BE2 Data
-    def addBe2Data(self, be2):
-        self.players['be2'].append(be2)
-    # BE3 Data
-    def addBe3Data(self, be3):
-        self.players['be3'].append(be3)
-    # BE4 Data
-    def addBe4Data(self, be4):
-        self.players['be4'].append(be4)
-    # BE5 Data
-    def addBe5Data(self, be5):
-        self.players['be5'].append(be5)
-    # BE6 Data
-    def addBe6Data(self, be6):
-        self.players['be6'].append(be6)
-    # BE7 Data
-    def addBe7Data(self, be7):
-        self.players['be7'].append(be7)
+    # Position-specific methods
+    def addQbData(self, qb: Player):
+        self._addPlayer("qb", qb)
+
+    def addRb1Data(self, rb1: Player):
+        self._addPlayer("rb1", rb1)
+
+    def addRb2Data(self, rb2: Player):
+        self._addPlayer("rb2", rb2)
+
+    def addWr1Data(self, wr1: Player):
+        self._addPlayer("wr1", wr1)
+
+    def addWr2Data(self, wr2: Player):
+        self._addPlayer("wr2", wr2)
+
+    def addTeData(self, te: Player):
+        self._addPlayer("te", te)
+
+    def addFlexData(self, flex: Player):
+        self._addPlayer("flex", flex)
+
+    def addDstData(self, dst: Player):
+        self._addPlayer("dst", dst)
+
+    def addKData(self, k: Player):
+        self._addPlayer("k", k)
+
+    # Bench slots
+    def addBe1Data(self, be1: Player):
+        self._addPlayer("be1", be1)
+
+    def addBe2Data(self, be2: Player):
+        self._addPlayer("be2", be2)
+
+    def addBe3Data(self, be3: Player):
+        self._addPlayer("be3", be3)
+
+    def addBe4Data(self, be4: Player):
+        self._addPlayer("be4", be4)
+
+    def addBe5Data(self, be5: Player):
+        self._addPlayer("be5", be5)
+
+    def addBe6Data(self, be6: Player):
+        self._addPlayer("be6", be6)
+
+    def addBe7Data(self, be7: Player):
+        self._addPlayer("be7", be7)
