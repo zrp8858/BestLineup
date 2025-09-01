@@ -37,16 +37,23 @@ class View(tk.Tk):
         self.addDisplayRow(self.lineupFrame, 3, "WR", self.wr1NameVar, self.wr1PtsVar)
         self.addDisplayRow(self.lineupFrame, 4, "WR", self.wr2NameVar, self.wr2PtsVar)
         self.addDisplayRow(self.lineupFrame, 5, "TE", self.teNameVar, self.tePtsVar)
-        self.addDisplayRow(
-            self.lineupFrame, 6, "FLEX", self.flexNameVar, self.flexPtsVar
-        )
+        self.addDisplayRow(self.lineupFrame, 6, "FLEX", self.flexNameVar, self.flexPtsVar)
         self.addDisplayRow(self.lineupFrame, 7, "D/ST", self.dstNameVar, self.dstPtsVar)
-        self.addDisplayRow(self.lineupFrame, 8, "K", self.kNameVar, self.kPtsVar, beSpace=(5, 20))
+        self.addDisplayRow(self.lineupFrame, 8, "K", self.kNameVar, self.kPtsVar, beSpace=(5, 10)) # Includes space b/t kicker and starters pts
+
+        # Total score for starters
+        self.startersPtsVar = tk.StringVar(value="0.0")
+        self.addDisplayRow(self.lineupFrame, 9, "", "Starters:", self.startersPtsVar, beSpace=(5, 20)) # Includes space b/t starters pts and bench
+
         # Bench
         for i in range(1, 8):
             nameVar = getattr(self, f"be{i}NameVar")
             ptsVar = getattr(self, f"be{i}PtsVar")
-            self.addDisplayRow(self.lineupFrame, 8 + i, "BE", nameVar, ptsVar)
+            self.addDisplayRow(self.lineupFrame, 9 + i, "BE", nameVar, ptsVar)
+
+        # Total score for full team
+        self.totalPtsVar = tk.StringVar(value="0.0")
+        self.addDisplayRow(self.lineupFrame, 17, "", "Total:", self.totalPtsVar, beSpace=(10, 20)) # Includes space b/t bench players and total/total and bottom of screen
 
     def displayEmptyLineup(self):
         # Main lineup
@@ -85,10 +92,13 @@ class View(tk.Tk):
             setattr(self, f"be{i}NameVar", tk.StringVar(value="Empty"))
             setattr(self, f"be{i}PtsVar", tk.StringVar(value="0.0"))
 
-    def addDisplayRow(self, parent, row, label, nameVar, ptsVar, beSpace=(5,5)):
-        tk.Label(parent, text=label).grid(row=row, column=0, padx=40, pady=beSpace)
-        tk.Label(parent, textvariable=nameVar).grid(row=row, column=1, padx=40, pady=beSpace)
-        tk.Label(parent, textvariable=ptsVar).grid(row=row, column=2, padx=40, pady=beSpace)
+    # Generic function for adding any three-column row in lineupFrame
+    def addDisplayRow(self, parent, row, first, second, third, beSpace=(5, 5)):
+        for col, value in enumerate([first, second, third]):
+            if isinstance(value, tk.StringVar):
+                tk.Label(parent, textvariable=value).grid(row=row, column=col, padx=40, pady=beSpace)
+            else:
+                tk.Label(parent, text=value).grid(row=row, column=col, padx=40, pady=beSpace)
 
     # Entry getters
     def getNameEntry(self):
@@ -204,7 +214,7 @@ class View(tk.Tk):
                 errMsg = f"Invalid position, please enter QB, RB, WR, TE, D/ST or K!"
             case 3:
                 errMsg = f"All available slots for this position are full!"
-        
+
         self.errMsgVar.set(errMsg)
         return False
 
