@@ -1,5 +1,5 @@
 from Player import Player
-from positions import Positions
+from Positions import Positions
 
 
 def checkPos(pos: str) -> bool:
@@ -32,15 +32,13 @@ class Controller:
         pos = self.view.getPosEntry()
         pts = self.view.getPtsEntry()
 
-        # Validate input
+        # Input validation
         if not checkNumber(pts):
-            self.view.setErrNum(1)
-            return False
+            return self.view.setErrorLabel(1)
         if not checkPos(pos):
-            self.view.setErrNum(2)
-            return False
+            return self.view.setErrorLabel(2)
 
-        # Create player object
+        # Create new player object
         player = Player(name, pos, float(pts))
 
         # Call the appropriate position updater
@@ -58,8 +56,7 @@ class Controller:
             return self.updateK(player)
 
         # If position invalid
-        self.view.setErrNum(2)
-        return False
+        return self.view.setErrorLabel(2)
 
     # Position updaters
     def updateQb(self, player) -> bool:
@@ -70,12 +67,9 @@ class Controller:
         elif not self.view.getBeFull():
             self.setNextBe(player)
         else:
-            self.view.setErrNum(3)
-            self.view.setErrPos("QB")
-            return False
-        self.view.setErrNum(0)
-        self.view.setErrPos("QB")
-        return True
+            return self.view.setErrorLabel(3)
+        
+        return self.view.setErrorLabel(0)
 
     def updateRb(self, player) -> bool:
         if not self.view.getRb1():
@@ -93,12 +87,9 @@ class Controller:
         elif not self.view.getBeFull():
             self.setNextBe(player)
         else:
-            self.view.setErrNum(3)
-            self.view.setErrPos("RB")
-            return False
-        self.view.setErrNum(0)
-        self.view.setErrPos("RB")
-        return True
+            return self.view.setErrorLabel(3)
+        
+        return self.view.setErrorLabel(0)
 
     def updateWr(self, player) -> bool:
         if not self.view.getWr1():
@@ -116,12 +107,9 @@ class Controller:
         elif not self.view.getBeFull():
             self.setNextBe(player)
         else:
-            self.view.setErrNum(3)
-            self.view.setErrPos("WR")
-            return False
-        self.view.setErrNum(0)
-        self.view.setErrPos("WR")
-        return True
+            return self.view.setErrorLabel(3)
+        
+        return self.view.setErrorLabel(0)
 
     def updateTe(self, player) -> bool:
         if not self.view.getTe():
@@ -135,12 +123,9 @@ class Controller:
         elif not self.view.getBeFull():
             self.setNextBe(player)
         else:
-            self.view.setErrNum(3)
-            self.view.setErrPos("TE")
-            return False
-        self.view.setErrNum(0)
-        self.view.setErrPos("TE")
-        return True
+            return self.view.setErrorLabel(3)
+        
+        return self.view.setErrorLabel(0)
 
     def updateDst(self, player) -> bool:
         if not self.view.getDst():
@@ -150,13 +135,10 @@ class Controller:
         elif not self.view.getBeFull():
             self.setNextBe(player)
         else:
-            self.view.setErrNum(3)
-            self.view.setErrPos("D/ST")
-            return False
-        self.view.setErrNum(0)
-        self.view.setErrPos("D/ST")
-        return True
+            return self.view.setErrorLabel(3)
 
+        return self.view.setErrorLabel(0)
+    
     def updateK(self, player) -> bool:
         if not self.view.getK():
             self.model.addKData(player)
@@ -165,12 +147,9 @@ class Controller:
         elif not self.view.getBeFull():
             self.setNextBe(player)
         else:
-            self.view.setErrNum(3)
-            self.view.setErrPos("K")
-            return False
-        self.view.setErrNum(0)
-        self.view.setErrPos("K")
-        return True
+            return self.view.setErrorLabel(3)
+        
+        return self.view.setErrorLabel(0)
 
     # Bench helper
     def setNextBe(self, player):

@@ -21,33 +21,34 @@ class View(tk.Tk):
         self.button = tk.Button(self, text="Add Player")
         self.button.grid(row=1, column=3, padx=10, pady=10)
 
-        self.errorLabel = tk.Label(self, text="", anchor="center", justify="center")
+        self.errMsgVar = tk.StringVar(value="Enter player info above")
+        self.errorLabel = tk.Label(self, textvariable=self.errMsgVar, anchor="center", justify="center")
         self.errorLabel.grid(row=2, column=0, columnspan=4, padx=10, pady=5)
 
-        # Best lineup frame
+        # Best lineup frame initialization
         self.lineupFrame = tk.Frame(self)
         self.lineupFrame.grid(row=3, column=0, columnspan=4)
-
-        # Initialize StringVars for all positions
-        self._init_player_vars()
+        self.displayEmptyLineup()
 
         # Create lineup rows
-        self._create_row(self.lineupFrame, 0, "QB", self.qbNameVar, self.qbPtsVar)
-        self._create_row(self.lineupFrame, 1, "RB", self.rb1NameVar, self.rb1PtsVar)
-        self._create_row(self.lineupFrame, 2, "RB", self.rb2NameVar, self.rb2PtsVar)
-        self._create_row(self.lineupFrame, 3, "WR", self.wr1NameVar, self.wr1PtsVar)
-        self._create_row(self.lineupFrame, 4, "WR", self.wr2NameVar, self.wr2PtsVar)
-        self._create_row(self.lineupFrame, 5, "TE", self.teNameVar, self.tePtsVar)
-        self._create_row(self.lineupFrame, 6, "FLEX", self.flexNameVar, self.flexPtsVar)
-        self._create_row(self.lineupFrame, 7, "D/ST", self.dstNameVar, self.dstPtsVar)
-        self._create_row(self.lineupFrame, 8, "K", self.kNameVar, self.kPtsVar)
+        self.addDisplayRow(self.lineupFrame, 0, "QB", self.qbNameVar, self.qbPtsVar)
+        self.addDisplayRow(self.lineupFrame, 1, "RB", self.rb1NameVar, self.rb1PtsVar)
+        self.addDisplayRow(self.lineupFrame, 2, "RB", self.rb2NameVar, self.rb2PtsVar)
+        self.addDisplayRow(self.lineupFrame, 3, "WR", self.wr1NameVar, self.wr1PtsVar)
+        self.addDisplayRow(self.lineupFrame, 4, "WR", self.wr2NameVar, self.wr2PtsVar)
+        self.addDisplayRow(self.lineupFrame, 5, "TE", self.teNameVar, self.tePtsVar)
+        self.addDisplayRow(
+            self.lineupFrame, 6, "FLEX", self.flexNameVar, self.flexPtsVar
+        )
+        self.addDisplayRow(self.lineupFrame, 7, "D/ST", self.dstNameVar, self.dstPtsVar)
+        self.addDisplayRow(self.lineupFrame, 8, "K", self.kNameVar, self.kPtsVar)
         # Bench
         for i in range(1, 8):
             nameVar = getattr(self, f"be{i}NameVar")
             ptsVar = getattr(self, f"be{i}PtsVar")
-            self._create_row(self.lineupFrame, 8 + i, "BE", nameVar, ptsVar)
+            self.addDisplayRow(self.lineupFrame, 8 + i, "BE", nameVar, ptsVar)
 
-    def _init_player_vars(self):
+    def displayEmptyLineup(self):
         # Main lineup
         self.qbNameVar = tk.StringVar(value="Empty")
         self.qbPtsVar = tk.StringVar(value="0.0")
@@ -79,15 +80,12 @@ class View(tk.Tk):
         self.benchNameVars = [None] + [tk.StringVar(value="Empty") for _ in range(1, 8)]
         self.benchPtsVars = [None] + [tk.StringVar(value="0.0") for _ in range(1, 8)]
 
-        self.errNumVar = tk.StringVar(value="")
-        self.errPosVar = tk.StringVar(value="N/A")
-
         # Bench
         for i in range(1, 8):
             setattr(self, f"be{i}NameVar", tk.StringVar(value="Empty"))
             setattr(self, f"be{i}PtsVar", tk.StringVar(value="0.0"))
 
-    def _create_row(self, parent, row, label, nameVar, ptsVar):
+    def addDisplayRow(self, parent, row, label, nameVar, ptsVar):
         tk.Label(parent, text=label).grid(row=row, column=0, padx=40, pady=5)
         tk.Label(parent, textvariable=nameVar).grid(row=row, column=1, padx=40, pady=5)
         tk.Label(parent, textvariable=ptsVar).grid(row=row, column=2, padx=40, pady=5)
@@ -194,11 +192,21 @@ class View(tk.Tk):
     def setBePts(self, num, text):
         self.benchPtsVars[num].set(str(text))
 
-    def setErrNum(self, num):
-        self.errNumVar.set(num)
-
-    def setErrPos(self, pos):
-        self.errPosVar.set(pos)
+    def setErrorLabel(self, num) -> bool:
+        errMsg = ""
+        match num:
+            case 0:
+                self.errMsgVar.set("Updated Lineup Successfully!")
+                return True
+            case 1:
+                errMsg = f"Invalid input for points, please enter a decimal value!"
+            case 2:
+                errMsg = f"Invalid position, please enter QB, RB, WR, TE, D/ST or K!"
+            case 3:
+                errMsg = f"All available slots for this position are full!"
+        
+        self.errMsgVar.set(errMsg)
+        return False
 
     # Button binding
     def setButtonCommand(self, command):
