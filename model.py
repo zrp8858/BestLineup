@@ -23,11 +23,18 @@ class Model:
             "be6": ("", 0.0),
             "be7": ("", 0.0),
         }
+        # Lineup points
+        self.startersPts = 0.0
+        self.totalPoints = 0.0
 
     # Lineup Getters
-    def getStartingLineup(self) -> Dict[str, Tuple[str, float]]:
-        return {pos: player for pos, player in self.players.items() if not pos.startswith("be")}
-    
+    def getStarters(self) -> Dict[str, Tuple[str, float]]:
+        return {
+            pos: player
+            for pos, player in self.players.items()
+            if not pos.startswith("be")
+        }
+
     def getFullLineup(self) -> Dict[str, Tuple[str, float]]:
         return self.players
 
@@ -35,6 +42,9 @@ class Model:
     def addPlayerData(self, slot: str, player: Player):
         if slot in self.players:
             self.players[slot] = player
+            if not slot.startswith("be"):
+                self.startersPts = self.calcStarters()
+            self.totalPoints = self.calcFullLineup()
         else:
             raise ValueError(f"Invalid slot name: {slot}")
 
@@ -89,11 +99,11 @@ class Model:
         self.addPlayerData("be7", be7)
 
     # Functions to generate total starting lineup & bench inclusive points
-    def calcStartingLineup(self) -> float:
-        startingLineup: Dict[str, Tuple[str, float]] = self.getStartingLineup()
+    def calcStarters(self) -> float:
+        starters: Dict[str, Tuple[str, float]] = self.getStarters()
         # Calculate total points for all values in list
-        return sum(pts for _, pts in startingLineup.values())
-    
+        return sum(pts for _, pts in starters.values())
+
     def calcFullLineup(self) -> float:
         fullLineup: Dict[str, Tuple[str, float]] = self.getFullLineup()
         # Calculate total points for all values in list
