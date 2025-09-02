@@ -76,6 +76,9 @@ class Controller:
         self.view.setStarterPts(self.model.starterPts)
         self.view.setTotalPts(self.model.totalPts)
 
+        # Handle calculating bench pts
+        self.view.setBenchPts(self.view.getTotalPts() - self.view.getStarterPts())
+
     # Position updaters
     def updateQb(self, player) -> bool:
         if not self.view.getQb():

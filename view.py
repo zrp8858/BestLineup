@@ -63,9 +63,13 @@ class View(tk.Tk):
         self.addDisplayRow(self.lineupFrame, 15, "BE", self.be6NameVar, self.be6PtsVar)
         self.addDisplayRow(self.lineupFrame, 16, "BE", self.be7NameVar, self.be7PtsVar)
 
+        # Total score for bench
+        self.addDisplayRow(
+            self.lineupFrame, 17, "", "Bench:", self.benchPtsVar, beSpace=(10, 5)
+        )
         # Total score for full team
         self.addDisplayRow(
-            self.lineupFrame, 17, "", "Total:", self.totalPtsVar, beSpace=(10, 20)
+            self.lineupFrame, 18, "", "Total:", self.totalPtsVar, beSpace=(10, 20)
         )  # Includes space b/t bench players and total/total and bottom of screen
 
     def displayEmptyLineup(self):
@@ -122,6 +126,8 @@ class View(tk.Tk):
         self.be7NameVar = tk.StringVar(value="Empty")
         self.be7PtsVar = tk.StringVar(value="0.0")
 
+        # Bench pts
+        self.benchPtsVar = tk.StringVar(value="0.0")
         # Total pts
         self.totalPtsVar = tk.StringVar(value="0.0")
 
@@ -176,16 +182,16 @@ class View(tk.Tk):
         return self.kNameVar.get() != "Empty"
 
     # Starter Pts
-    def getStarterPts(self) -> str:
-        return self.starterPtsVar.get()
+    def getStarterPts(self) -> float:
+        return float(self.starterPtsVar.get())
 
     # Bench Full
     def getBeFull(self) -> bool:
         return self.be7NameVar.get() != "Empty"
 
     # Total Pts
-    def getTotalPts(self) -> str:
-        return self.totalPtsVar.get()
+    def getTotalPts(self) -> float:
+        return float(self.totalPtsVar.get())
 
     # Slot setters
     def setSlot(self, slot: str, name: str, pts: float):
@@ -198,7 +204,7 @@ class View(tk.Tk):
             self.calcViewUpdates(slot)
         else:
             raise ValueError(f"Invalid slot: {slot}")
-        
+
     def slotToPos(slot: str) -> Positions:
         if slot.startswith("qb"):
             return Positions.QB
@@ -212,7 +218,7 @@ class View(tk.Tk):
             return Positions.DST
         elif slot.startswith("k"):
             return Positions.K
-        
+
         return Positions.BE
 
     # Starting Lineup
@@ -317,6 +323,9 @@ class View(tk.Tk):
     def setBe7Pts(self, text):
         self.be7PtsVar.set(str(text))
 
+    # Bench Pts
+    def setBenchPts(self, text):
+        self.benchPtsVar.set(str(text))
     # Total Pts
     def setTotalPts(self, text):
         self.totalPtsVar.set(str(text))
