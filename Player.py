@@ -1,13 +1,13 @@
-from typing import Optional
-from positions import FantasyPositions
+from positions import FantasyPositions, NflPositions
 
 
 class Player:
     def __init__(
-        self, name: str = "Empty", pos: Optional[Positions] = None, pts: float = 0.0
+        self, name: str, nflPos: NflPositions, pos: FantasyPositions, pts: float
     ):
         self.name: str = name
-        self.pos: Optional[Positions] = pos
+        self.nflPos: NflPositions = nflPos
+        self.pos: FantasyPositions = pos
         self.pts: float = pts
 
     # Conversion of player to custom string type
