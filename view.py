@@ -19,8 +19,8 @@ class View(tk.Tk):
         self.pointsEntry = tk.Entry(self)
         self.pointsEntry.grid(row=1, column=2, padx=10, pady=10)
 
-        self.button = tk.Button(self, text="Add Player")
-        self.button.grid(row=1, column=3, padx=10, pady=10)
+        self.addButton = tk.Button(self, text="Add Player")
+        self.addButton.grid(row=1, column=3, padx=10, pady=10)
 
         self.errMsgVar = tk.StringVar(value="Enter player info above")
         self.errorLabel = tk.Label(
@@ -347,5 +347,5 @@ class View(tk.Tk):
         return False
 
     # Button binding
-    def setButtonCommand(self, command):
-        self.button.config(command=command)
+    def setAddButtonCommand(self, command):
+        self.addButton.config(command=command)

@@ -26,7 +26,7 @@ class Controller:
         self.view = view
 
         # Bind the Add Player button
-        self.view.setButtonCommand(self.updateModel)
+        self.view.setAddButtonCommand(self.updateModel)
 
     def updateModel(self) -> bool:
         # Get Player Info to be stored
