@@ -1,5 +1,5 @@
 import tkinter as tk
-from positions import Positions
+from positions import FantasyPositions
 
 
 class View(tk.Tk):
@@ -208,21 +208,21 @@ class View(tk.Tk):
         else:
             raise ValueError(f"Invalid slot: {slot}")
 
-    def slotToPos(slot: str) -> Positions:
+    def slotToPos(slot: str) -> FantasyPositions:
         if slot.startswith("qb"):
-            return Positions.QB
+            return FantasyPositions.QB
         elif slot.startswith("rb"):
-            return Positions.RB
+            return FantasyPositions.RB
         elif slot.startswith("wr"):
-            return Positions.WR
+            return FantasyPositions.WR
         elif slot.startswith("te"):
-            return Positions.TE
+            return FantasyPositions.TE
         elif slot.startswith("dst"):
-            return Positions.DST
+            return FantasyPositions.DST
         elif slot.startswith("k"):
-            return Positions.K
+            return FantasyPositions.K
 
-        return Positions.BE
+        return FantasyPositions.BE
 
     # Starting Lineup
     def setQbName(self, text):

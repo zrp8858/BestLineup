@@ -1,10 +1,10 @@
 from player import Player
-from positions import Positions
+from positions import FantasyPositions
 
 
 def checkPos(pos: str) -> bool:
     try:
-        Positions(pos)
+        FantasyPositions(pos)
         return True
     except ValueError:
         print("[WARN]: " + pos)
@@ -44,7 +44,7 @@ class Controller:
 
         # Convert position to proper type
         try:
-            posEnum = Positions[pos.upper()]
+            posEnum = FantasyPositions[pos.upper()]
         except KeyError:
             print("[WARN] Position conversion error: " + str(posEnum))
             return self.view.setErrorLabel(2)
@@ -52,25 +52,25 @@ class Controller:
         player = Player(name, posEnum, float(pts))
 
         # Call the appropriate position updater
-        if posEnum == Positions.QB:
+        if posEnum == FantasyPositions.QB:
             self.updateQb(player)
-        elif posEnum == Positions.RB:
+        elif posEnum == FantasyPositions.RB:
             self.updateRb(player)
-        elif posEnum == Positions.WR:
+        elif posEnum == FantasyPositions.WR:
             self.updateWr(player)
-        elif posEnum == Positions.TE:
+        elif posEnum == FantasyPositions.TE:
             self.updateTe(player)
-        elif posEnum == Positions.DST:
+        elif posEnum == FantasyPositions.DST:
             self.updateDst(player)
-        elif posEnum == Positions.K:
+        elif posEnum == FantasyPositions.K:
             self.updateK(player)
 
         # Calculate totals and add to view
         self.calculateTotals(posEnum)
 
-    def calculateTotals(self, pos: Positions):
+    def calculateTotals(self, pos: FantasyPositions):
         # Calculate the different point totals in model
-        if not Positions(pos) == Positions.BE:
+        if not FantasyPositions(pos) == FantasyPositions.BE:
             self.model.starterPts = self.model.calcStarters()
         self.model.totalPts = self.model.calcFullLineup()
 
@@ -104,7 +104,7 @@ class Controller:
             self.view.setRb2Name(player.name)
             self.view.setRb2Pts(player.pts)
         elif not self.view.getFlex():
-            player.pos = Positions.FLEX
+            player.pos = FantasyPositions.FLEX
             self.model.addPlayerData(player)
             self.view.setFlexName(player.name)
             self.view.setFlexPts(player.pts)
@@ -125,7 +125,7 @@ class Controller:
             self.view.setWr2Name(player.name)
             self.view.setWr2Pts(player.pts)
         elif not self.view.getFlex():
-            player.pos = Positions.FLEX
+            player.pos = FantasyPositions.FLEX
             self.model.addPlayerData(player)
             self.view.setFlexName(player.name)
             self.view.setFlexPts(player.pts)
@@ -142,7 +142,7 @@ class Controller:
             self.view.setTeName(player.name)
             self.view.setTePts(player.pts)
         elif not self.view.getFlex():
-            player.pos = Positions.FLEX
+            player.pos = FantasyPositions.FLEX
             self.model.addPlayerData(player)
             self.view.setFlexName(player.name)
             self.view.setFlexPts(player.pts)
@@ -189,7 +189,7 @@ class Controller:
                 pts.set(str(player.pts))
 
                 # Update the model
-                player.pos = Positions.BE
+                player.pos = FantasyPositions.BE
                 self.model.addPlayerData(player)
                 return True
 

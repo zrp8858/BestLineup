@@ -1,5 +1,5 @@
 from typing import Optional
-from positions import Positions
+from positions import FantasyPositions
 
 
 class Player:

@@ -1,6 +1,6 @@
 from typing import List
 from player import Player
-from positions import Positions
+from positions import FantasyPositions
 
 
 class Model:
@@ -14,7 +14,7 @@ class Model:
 
     # Lineup Getters
     def getStarters(self) -> List[Player]:
-        return [player for player in self.players if player.pos != Positions.BE]
+        return [player for player in self.players if player.pos != FantasyPositions.BE]
 
     def getFullLineup(self) -> List[Player]:
         return self.players
