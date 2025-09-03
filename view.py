@@ -22,11 +22,14 @@ class View(tk.Tk):
         self.addButton = tk.Button(self, text="Add Player")
         self.addButton.grid(row=1, column=3, padx=10, pady=10)
 
+        self.sortButton = tk.Button(self, text="Find Best Lineup")
+        self.sortButton.grid(row=2, column=3, padx=10, pady=10)
+
         self.errMsgVar = tk.StringVar(value="Enter player info above")
         self.errorLabel = tk.Label(
             self, textvariable=self.errMsgVar, anchor="center", justify="center"
         )
-        self.errorLabel.grid(row=2, column=0, columnspan=4, padx=10, pady=5)
+        self.errorLabel.grid(row=3, column=0, columnspan=4, padx=10, pady=5)
 
         # New Frame:
         # Best lineup frame initialization
@@ -326,6 +329,7 @@ class View(tk.Tk):
     # Bench Pts
     def setBenchPts(self, text):
         self.benchPtsVar.set(str(text))
+
     # Total Pts
     def setTotalPts(self, text):
         self.totalPtsVar.set(str(text))
@@ -349,3 +353,6 @@ class View(tk.Tk):
     # Button binding
     def setAddButtonCommand(self, command):
         self.addButton.config(command=command)
+
+    def setSortButtonCommand(self, command):
+        self.sortButton.config(command=command)
