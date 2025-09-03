@@ -1,6 +1,6 @@
 from typing import List
 from player import Player
-from positions import FantasyPositions
+from positions import FantasyPositions, NflPositions
 
 
 class Model:
@@ -13,11 +13,31 @@ class Model:
         self.totalPts = 0.0
 
     # Lineup Getters
+    # Point Getters
     def getStarters(self) -> List[Player]:
         return [player for player in self.players if player.pos != FantasyPositions.BE]
 
     def getFullLineup(self) -> List[Player]:
         return self.players
+    
+    # Sorting Getters
+    def getQbs(self) -> List[Player]:
+        return [player for player in self.players if player.nflPos == NflPositions.QB]
+    
+    def getRbs(self) -> List[Player]:
+        return [player for player in self.players if player.nflPos == NflPositions.RB]
+    
+    def getWrs(self) -> List[Player]:
+        return [player for player in self.players if player.nflPos == NflPositions.WR]
+    
+    def getTes(self) -> List[Player]:
+        return [player for player in self.players if player.nflPos == NflPositions.TE]
+    
+    def getDsts(self) -> List[Player]:
+        return [player for player in self.players if player.nflPos == NflPositions.DST]
+    
+    def getKs(self) -> List[Player]:
+        return [player for player in self.players if player.nflPos == NflPositions.K]
 
     # Generic add method to player list
     def addPlayerData(self, player: Player):
