@@ -1,5 +1,5 @@
-from Player import Player
-from Positions import Positions
+from player import Player
+from positions import Positions
 
 
 def checkPos(pos: str) -> bool:
@@ -91,7 +91,7 @@ class Controller:
             self.setNextBe(player)
         else:
             return self.view.setErrorLabel(3)
-        
+
         return self.view.setErrorLabel(0)
 
     def updateRb(self, player) -> bool:
@@ -112,7 +112,7 @@ class Controller:
             self.setNextBe(player)
         else:
             return self.view.setErrorLabel(3)
-        
+
         return self.view.setErrorLabel(0)
 
     def updateWr(self, player) -> bool:
@@ -133,7 +133,7 @@ class Controller:
             self.setNextBe(player)
         else:
             return self.view.setErrorLabel(3)
-        
+
         return self.view.setErrorLabel(0)
 
     def updateTe(self, player) -> bool:
@@ -150,7 +150,7 @@ class Controller:
             self.setNextBe(player)
         else:
             return self.view.setErrorLabel(3)
-        
+
         return self.view.setErrorLabel(0)
 
     def updateDst(self, player) -> bool:
@@ -164,7 +164,7 @@ class Controller:
             return self.view.setErrorLabel(3)
 
         return self.view.setErrorLabel(0)
-    
+
     def updateK(self, player) -> bool:
         if not self.view.getK():
             self.model.addPlayerData(player)
@@ -174,7 +174,7 @@ class Controller:
             self.setNextBe(player)
         else:
             return self.view.setErrorLabel(3)
-        
+
         return self.view.setErrorLabel(0)
 
     # Bench helper
@@ -187,14 +187,14 @@ class Controller:
                 # Update the view
                 name.set(player.name)
                 pts.set(str(player.pts))
-                
+
                 # Update the model
                 player.pos = Positions.BE
                 self.model.addPlayerData(player)
                 return True
 
         return self.view.setErrorLabel(3)
-    
+
     # Logic for sorting players in lineup
     def findBestLineup(self):
         return

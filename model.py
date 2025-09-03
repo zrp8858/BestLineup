@@ -1,6 +1,6 @@
 from typing import List
-from Player import Player
-from Positions import Positions
+from player import Player
+from positions import Positions
 
 
 class Model:

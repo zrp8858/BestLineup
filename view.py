@@ -1,5 +1,5 @@
 import tkinter as tk
-from Positions import Positions
+from positions import Positions
 
 
 class View(tk.Tk):
