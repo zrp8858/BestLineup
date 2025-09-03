@@ -12,7 +12,7 @@ class Player:
 
     # Conversion of player to custom string type
     def __str__(self):
-        return f"{self.pos.name}: {self.name} - {self.pts} pts"
+        return f"{self.pos.name}: {self.name} ({self.nflPos.name}) - {self.pts} pts"
 
     def __repr__(self):
         return self.__str__()

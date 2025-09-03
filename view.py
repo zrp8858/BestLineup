@@ -149,6 +149,9 @@ class View(tk.Tk):
     # Entry getters
     def getNameEntry(self):
         return self.nameEntry.get()
+    
+    def getNflPosEntry(self):
+        return self.positionEntry.get()
 
     def getPosEntry(self):
         return self.positionEntry.get()
