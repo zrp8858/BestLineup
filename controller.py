@@ -1,5 +1,5 @@
 from player import Player
-from positions import FantasyPositions
+from positions import FantasyPositions, NflPositions
 
 
 def checkPos(pos: str) -> bool:
@@ -33,6 +33,7 @@ class Controller:
     def updateModel(self):
         # Get Player Info to be stored
         name = self.view.getNameEntry()
+        nflPos = self.view.getNflPosEntry()
         pos = self.view.getPosEntry()
         pts = self.view.getPtsEntry()
 
@@ -44,25 +45,26 @@ class Controller:
 
         # Convert position to proper type
         try:
+            nflPosEnum = NflPositions[nflPos.upper()]
             posEnum = FantasyPositions[pos.upper()]
         except KeyError:
-            print("[WARN] Position conversion error: " + str(posEnum))
+            print("[WARN] Position(s) conversion error: " + str(posEnum) + ", " + str(nflPosEnum))
             return self.view.setErrorLabel(2)
 
-        player = Player(name, posEnum, float(pts))
+        player = Player(name, nflPosEnum, posEnum, float(pts))
 
         # Call the appropriate position updater
-        if posEnum == FantasyPositions.QB:
+        if nflPosEnum == NflPositions.QB:
             self.updateQb(player)
-        elif posEnum == FantasyPositions.RB:
+        elif nflPosEnum == NflPositions.RB:
             self.updateRb(player)
-        elif posEnum == FantasyPositions.WR:
+        elif nflPosEnum == NflPositions.WR:
             self.updateWr(player)
-        elif posEnum == FantasyPositions.TE:
+        elif nflPosEnum == NflPositions.TE:
             self.updateTe(player)
-        elif posEnum == FantasyPositions.DST:
+        elif nflPosEnum == NflPositions.DST:
             self.updateDst(player)
-        elif posEnum == FantasyPositions.K:
+        elif nflPosEnum == NflPositions.K:
             self.updateK(player)
 
         # Calculate totals and add to view
