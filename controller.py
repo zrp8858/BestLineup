@@ -25,10 +25,12 @@ class Controller:
         self.model = model
         self.view = view
 
-        # Bind the Add Player button
+        # Bind add and sort buttons
         self.view.setAddButtonCommand(self.updateModel)
+        self.view.setSortButtonCommand(self.findBestLineup)
 
-    def updateModel(self) -> bool:
+    # Logic for adding a player to lineup
+    def updateModel(self):
         # Get Player Info to be stored
         name = self.view.getNameEntry()
         pos = self.view.getPosEntry()
@@ -192,3 +194,7 @@ class Controller:
                 return True
 
         return self.view.setErrorLabel(3)
+    
+    # Logic for sorting players in lineup
+    def findBestLineup(self):
+        return

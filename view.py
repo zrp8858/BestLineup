@@ -334,12 +334,11 @@ class View(tk.Tk):
     def setTotalPts(self, text):
         self.totalPtsVar.set(str(text))
 
-    def setErrorLabel(self, num) -> bool:
+    def setErrorLabel(self, num):
         errMsg = ""
         match num:
             case 0:
-                self.errMsgVar.set("Updated Lineup Successfully!")
-                return True
+                return self.errMsgVar.set("Updated Lineup Successfully!")
             case 1:
                 errMsg = f"Invalid input for points, please enter a decimal value!"
             case 2:
@@ -347,8 +346,7 @@ class View(tk.Tk):
             case 3:
                 errMsg = f"All available slots for this position are full!"
 
-        self.errMsgVar.set(errMsg)
-        return False
+        return self.errMsgVar.set(errMsg)
 
     # Button binding
     def setAddButtonCommand(self, command):
