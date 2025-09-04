@@ -1,3 +1,4 @@
+from typing import List
 from player import Player
 from positions import FantasyPositions, NflPositions
 
@@ -48,7 +49,12 @@ class Controller:
             nflPosEnum = NflPositions[nflPos.upper()]
             posEnum = FantasyPositions[pos.upper()]
         except KeyError:
-            print("[WARN] Position(s) conversion error: " + str(posEnum) + ", " + str(nflPosEnum))
+            print(
+                "[WARN] Position(s) conversion error: "
+                + str(posEnum)
+                + ", "
+                + str(nflPosEnum)
+            )
             return self.view.setErrorLabel(2)
 
         player = Player(name, nflPosEnum, posEnum, float(pts))
@@ -198,5 +204,68 @@ class Controller:
         return self.view.setErrorLabel(3)
 
     # Logic for sorting players in lineup
-    def findBestLineup(self):
-        return
+    def findBestLineup(self) -> List[Player]:
+        # Final Sorted Lineup in order displayed on UI
+        bestLineup: List[Player] = []
+
+        # 1. Add top for each position if they exist
+        bestLineup.extend(self.model.getQbs()[:1])
+        bestLineup.extend(self.model.getRbs()[:2])
+        bestLineup.extend(self.model.getWrs()[:2])
+        bestLineup.extend(self.model.getTes()[:1])
+        # 2. Generate flex top lineup
+        bestLineup.extend(self.filterFlex(self.model.getFlexs())[:1])
+        # 3. Add dst and k
+        bestLineup.extend(self.model.getDsts()[:1])
+        bestLineup.extend(self.model.getKs()[:1])
+        # 4. Add rest of lineup to bench sorted
+        for player in self.filterBench():
+            bestLineup.append(player)
+
+        return bestLineup
+    
+    def filterBench(self) -> List[Player]:
+        # Get players that are not in starting lineup
+        benchPlayers: List[Player] = []
+        # Qbs
+        for qb in self.model.getQbs()[1:]: # exclude starter
+            benchPlayers.append(qb)
+        # Non-Flex players
+        for flex in self.filterFlex(self.model.getFlexs())[1:]: # exclude flex leader
+            benchPlayers.append(flex)
+        # Dsts
+        for dst in self.model.getDsts()[1:]:
+            benchPlayers.append(dst)
+        # K
+        for k in self.model.getKs()[1:]:
+            benchPlayers.append(k)
+
+        # Return the sorted list
+        return sorted(
+            [player for player in benchPlayers],
+            key=lambda p: p.pts,
+            reverse=True,
+        )
+
+    def filterFlex(self, flexOpts: List[Player]) -> List[Player]:
+        # Remove starting players that could be in flexOpts
+        rbCount = 0
+        wrCount = 0
+        teCount = 0
+
+        filtered: List[Player] = []
+
+        for player in flexOpts:
+            if player.nflPos == NflPositions.RB and rbCount < 2:
+                rbCount += 1
+                continue
+            if player.nflPos == NflPositions.WR and wrCount < 2:
+                wrCount += 1
+                continue
+            if player.nflPos == NflPositions.TE and teCount < 1:
+                teCount += 1
+                continue
+
+            filtered.append(player)
+
+        return filtered
