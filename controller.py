@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional, Union
 from player import Player
 from positions import FantasyPositions, NflPositions
 
@@ -45,10 +45,10 @@ class Controller:
             return self.view.setErrorLabel(2)
 
         # Convert position to proper type
-        try:
-            nflPosEnum = NflPositions[nflPos.upper()]
-            posEnum = FantasyPositions[pos.upper()]
-        except KeyError:
+        nflPosEnum = self.getPosEnums(nflPos)
+        posEnum = self.getPosEnums(pos, True)
+        # Error if the position is not defined
+        if nflPosEnum == None:
             print(
                 "[WARN] Position(s) conversion error: "
                 + str(posEnum)
@@ -75,6 +75,16 @@ class Controller:
 
         # Calculate totals and add to view
         self.calculateTotals(posEnum)
+
+    def getPosEnums(self, pos: str, isFantasy: bool = False) -> Optional[Union[NflPositions, FantasyPositions]]:
+        posUpper = pos.upper()
+        enum = FantasyPositions if isFantasy else NflPositions
+
+        for p in enum:
+            # Edge case for dst
+            if p.value.upper() == posUpper:
+                return p
+        return None
 
     def calculateTotals(self, pos: FantasyPositions):
         # Calculate the different point totals in model
