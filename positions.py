@@ -6,5 +6,7 @@ class Positions(Enum):
     RB = "RB"
     WR = "WR"
     TE = "TE"
+    FLEX = "FLEX"
     DST = "D/ST"
     K = "K"
+    BE = "BE"
